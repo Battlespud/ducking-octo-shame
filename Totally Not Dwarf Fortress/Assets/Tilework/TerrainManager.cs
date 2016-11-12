@@ -22,14 +22,6 @@ using System.Collections.Generic;
 	
 
 
-
-
-
-
-
-
-
-
 public class TerrainManager : MonoBehaviour {
 
 
@@ -40,9 +32,9 @@ public class TerrainManager : MonoBehaviour {
 	private TerrainTile terra;
 	public int activeLevel =1;
 
-	const int worldsize = 50; //all worlds are square until proven otherwise.  5280 Default
+	const int worldsize = 5; //all worlds are square until proven otherwise.  5280 Default
 	//WARNING: Actual size is this value squared, times the y limit, so be careful with going too crazy
-	const int ylimit = 6;//number of levels * 2.  must be even
+	const int ylimit = 4;//number of levels * 2.  must be even
 	const int ZERO = 0;
 	const int TICK = 1;
 

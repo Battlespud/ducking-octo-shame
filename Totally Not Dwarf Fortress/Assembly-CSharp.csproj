@@ -45,6 +45,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Actors\AI\AIPackage.cs" />
+     <Compile Include="Assets\Actors\Animal.cs" />
+     <Compile Include="Assets\Actors\Body\Arm.cs" />
+     <Compile Include="Assets\Actors\Body\Artery.cs" />
+     <Compile Include="Assets\Actors\Body\Blood.cs" />
+     <Compile Include="Assets\Actors\Body\Bones.cs" />
+     <Compile Include="Assets\Actors\Body\HealthManager.cs" />
+     <Compile Include="Assets\Actors\Body\Leg.cs" />
+     <Compile Include="Assets\Actors\Body\Spine.cs" />
+     <Compile Include="Assets\Actors\Entity.cs" />
+     <Compile Include="Assets\Actors\Human.cs" />
+     <Compile Include="Assets\Actors\Items\Weapon.cs" />
+     <Compile Include="Assets\Actors\Sentient.cs" />
+     <Compile Include="Assets\Main.cs" />
      <Compile Include="Assets\Tilework\TerrainManager.cs" />
      <Compile Include="Assets\Tilework\TerrainTile.cs" />
      <Compile Include="Assets\Tilework\TerrainTileParent.cs" />
