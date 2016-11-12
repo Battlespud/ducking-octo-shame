@@ -1,0 +1,14 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Tilework\TerrainTileParent.cs">
+    <Files>
+      <File FileName="Assets\Tilework\TerrainManager.cs" Line="229" Column="1" />
+      <File FileName="Assets\Tilework\TerrainTile.cs" Line="9" Column="31" />
+      <File FileName="Assets\Tilework\TerrainTileParent.cs" Line="26" Column="11" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
