@@ -33,3 +33,13 @@ sysinfo.txt
 ehthumbs.db
 [Tt]humbs.db
 [Dd]esktop.ini
+ $PROJDIR/Temp/
+ $PROJDIR/Library/
+ $PROJDIR/Obj/
+ 
+ *.csproj
+ *.unityproj
+ *.sln
+ *.user
+ *.userprefs
+ *.DS_store
