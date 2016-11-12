@@ -14,7 +14,7 @@ public class Main : MonoBehaviour {
 
 	public void addDebugActor()
 	{
-		Transform t = Instantiate (Char, new Vector3 (0, .5, 0), Quaternion.identity) as Transform;
+		Transform t = Instantiate (Char, new Vector3 (0f, .5f, 0f), Quaternion.identity) as Transform;
 		ActorList.Add (t.gameObject);
 
 
