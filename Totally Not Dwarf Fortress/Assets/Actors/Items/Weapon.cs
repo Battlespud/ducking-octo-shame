@@ -10,6 +10,34 @@ public class Weapon : MonoBehaviour {
 	public string Descriptive; //of digging
 	public string condensedName;
 
+
+
+	public int mCD = 60; // 60*sec
+	public int CD = 0; 
+	public bool onCD = false;
+
+
+
+	public Weapon(){
+		Material = "Broken";
+		Name = "Sword";
+		Descriptive = "Debugging";
+		buildName (this);
+		avgDamage = 10000;
+
+	}
+
+
+	void checkCD()
+	{
+		if (CD != 0) {
+			onCD = true;
+			CD--;
+		} else {
+			onCD = false;
+		}
+	}
+
 	public static void buildName(Weapon wep){
 		wep.condensedName = wep.Material + " " + wep.Name + " of " + wep.Descriptive;
 		return;
@@ -23,10 +51,12 @@ public class Weapon : MonoBehaviour {
 	public int mDamage; //max damage
 	public int avgDamage; //average to calculate from
 
-	public int Mass; //in KG
-	public int Length;  
+	public float armorPen=.5f; //what percent of armor to skip
 
-	public int Position;  //two handers will be treated as 8 position for humans
+	public int Mass = 2; //in KG
+	public int Length = 1;//meters  
+
+	public int Position=6;  //two handers will be treated as 8 position for humans
 
 
 	//Enums___________________________________________________________________________________
@@ -96,6 +126,6 @@ public class Weapon : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		checkCD ();
 	}
 }

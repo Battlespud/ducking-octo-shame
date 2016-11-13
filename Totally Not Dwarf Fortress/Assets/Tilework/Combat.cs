@@ -2,34 +2,90 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public static class Combat : MonoBehaviour {
+public class Combat : MonoBehaviour {
 
 	//idk even how to make this work so yolo fam
 
 
-
+	//_______________________________________________________________________________________________
 
 
 
 	static void attack(Human attacker, Human defender)
 	{
+		if (attacker.weapon.onCD) {
+			return;   //weapon isnt ready to attack again  yet
+		}
 		//damage will be dealt to limb or body parts at selected value
-		var targetPos = chooseTargetPosition(attacker, defender);
-
-
-
-
-
-
-
-
+		int targetPos = chooseTargetPosition(attacker, defender);
+		//Roll for hit
+		if (!checkHit (attacker, defender)) {
+			return; //attack misses
+		}
+		deliverDamage (attacker, defender,targetPos);
 
 	}
+
+
+	//________________________________________________________________________________________________
+
+
+
+	static void deliverDamage(Human attacker, Human defender, int targetPos){
+		Bone b = new Bone();
+		Arm a = new Arm ();
+		bool severed = false;
+		if (targetPos == 4) {
+			a = defender.LeftArm;
+			b = defender.LeftArm.ArmBones[Random.Range(1,defender.LeftArm.ArmBones.Count)];
+		}
+		if (targetPos == 6) {
+			a = defender.RightArm;
+			b = defender.RightArm.ArmBones[Random.Range(1,defender.RightArm.ArmBones.Count)];
+		}
+		if (checkSever (attacker.weapon, b)) { //remove arm if severed
+			foreach(Bone c in a.ArmBones){
+				if (b.hierarchy < c.hierarchy && c.useHierarchy) {
+					c.removeBone(c);
+				}
+				if (defender.weapon != null && a == defender.RightArm) {
+					defender.weapon = null;
+				}
+			}
+			severed = true;
+		}
+
+
+
+		try{
+			Debug.Log(a +" has been hit! Severed: " + severed);
+		b.health -= attacker.weapon.avgDamage;
+		b.checkBone (b);
+		}
+		catch {//bone wasnt set successfully probably
+		}
+}
+
+
+	static bool checkSever(Weapon w, Bone b){
+		return(w.avgDamage > b.health * 1.5);
+	}
+
+
+
+
+	static bool checkHit(Human attacker, Human defender){
+		//TODO
+		return true;
+
+	}
+
+
 
 	static int chooseTargetPosition(Human attacker, Human defender){
 		attacker.gameObject.transform.LookAt (defender.gameObject.transform);
 		int relativeTargetPosition; //using keypad notation
-		List<int>PossiblePositions;
+		List<int>PossiblePositions = new List<int>();
 		int i = 0;
 		while (i < 9) {
 			i++;
@@ -40,15 +96,10 @@ public static class Combat : MonoBehaviour {
 		 * 
 		 * */
 		Vector3 hitVector = new Vector3 (); //used to determine which part of the defender was hit
-		Vector3 attackVector = new Vector3 (); //used to determine how far the attacker is, not strictly neccessary, consider replacing references with hitvector
 		//get attacker direction
-		attackVector = attacker.gameObject.transform.InverseTransformPoint(defender.gameObject.transform);
-		hitVector = defender.gameObject.transform.InverseTransformPoint(attacker.gameObject.transform);
+		hitVector = defender.gameObject.transform.InverseTransformPoint(attacker.gameObject.transform.position);
 
-		if ((attackVector.x < -1 || attackVector.x > 1 || attackVector.y != 0 || attackVector.z < -1 || attackVector.z > 1)) {
-			Debug.Log ("Attempted attack over invalid distance");
-			return;
-		}
+
 
 		//determine direction of hit
 		if (hitVector.x < 0) {

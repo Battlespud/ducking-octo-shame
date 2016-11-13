@@ -107,6 +107,12 @@ public class Bone : MonoBehaviour {
 
 	}
 
+	public void removeBone(Bone bone){
+		breakBone (bone);
+		bone.canRegen = false;
+		bone.removed = true;
+	}
+
 	public void checkBone ( Bone bone){
 		if (bone.health < 0) {
 			bone.health = 0;

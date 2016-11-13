@@ -6,7 +6,9 @@ public class Human : Sentient {
 
 	public List<Bone> Skeleton = new List<Bone>();
 
-	public Weapon[] Weapons = new Weapon[2]; //Can hold 1 weapon in each hand
+	public Weapon weapon;
+	//public Weapon[] Weapons = new Weapon[2]; //Can hold 1 weapon in each hand
+	public SkillSet Skills = new SkillSet();
 
 	public const int MALE = 1;
 	public const int FEMALE = 0;
@@ -26,6 +28,11 @@ public class Human : Sentient {
 
 	public Gender gender; 
 
+	public Arm LeftArm;
+	public Arm RightArm;
+	public Leg LeftLeg;
+	public Leg RightLeg;
+
 
 	public Human(Gender g, string n){
 		name = n;
@@ -33,11 +40,11 @@ public class Human : Sentient {
 		increaseIDMain ();
 		ID = IDMain;
 
-		Arm LeftArm = new Arm(MIDLEFT,g); //left and right arms with gender weighting
-		Arm RightArm = new Arm(MIDRIGHT,g);
+		 LeftArm = new Arm(MIDLEFT,g); //left and right arms with gender weighting
+		 RightArm = new Arm(MIDRIGHT,g);
 
-		Leg LeftLeg = new Leg (MIDMID, g);
-		Leg RightLeg = new Leg (MIDMID, g);
+		 LeftLeg = new Leg (MIDMID, g);
+		 RightLeg = new Leg (MIDMID, g);
 
 		Skeleton.Add (LeftArm);
 		Skeleton.Add (LeftLeg);

@@ -5,7 +5,8 @@ public class SkillSet : MonoBehaviour {
 
 	public  const int SkillCap = 20;
 
-	public int 
+	public int Swords =1;
+
 
 
 
