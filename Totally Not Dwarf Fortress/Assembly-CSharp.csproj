@@ -58,7 +58,9 @@
      <Compile Include="Assets\Actors\Human.cs" />
      <Compile Include="Assets\Actors\Items\Weapon.cs" />
      <Compile Include="Assets\Actors\Sentient.cs" />
+     <Compile Include="Assets\Actors\SkillSet.cs" />
      <Compile Include="Assets\Main.cs" />
+     <Compile Include="Assets\Tilework\Combat.cs" />
      <Compile Include="Assets\Tilework\TerrainManager.cs" />
      <Compile Include="Assets\Tilework\TerrainTile.cs" />
      <Compile Include="Assets\Tilework\TerrainTileParent.cs" />
