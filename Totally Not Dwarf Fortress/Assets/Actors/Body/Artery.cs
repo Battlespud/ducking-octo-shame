@@ -15,7 +15,16 @@ public class Artery : Bloodsystem {
 	public int bloodflow; //bloodflow in liters/hour/5
 	public bool damaged = false;
 
+	public void severArtery(Artery a){
+		a.bloodflow = 0;
 
+	}
+
+	public void setBleed(Artery a, double pct)
+	{
+		a.isBleeding = true;
+		a.pBleeding = pct;
+	}
 
 
 	public Artery(int h, int bflow){

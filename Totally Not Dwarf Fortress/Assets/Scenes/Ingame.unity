@@ -102,7 +102,6 @@ GameObject:
   - 92: {fileID: 554745114}
   - 124: {fileID: 554745113}
   - 81: {fileID: 554745112}
-  - 114: {fileID: 554745117}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -178,27 +177,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &554745117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 554745111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e44af8091779fcb40801d5b284353dbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Target: {fileID: 0}
-  m_AutoTargetPlayer: 1
-  m_UpdateType: 0
-  m_MoveSpeed: 1
-  m_TurnSpeed: 1.5
-  m_TurnSmoothing: 0
-  m_TiltMax: 75
-  m_TiltMin: 45
-  m_LockCursor: 0
-  m_VerticalAutoReturn: 0
 --- !u!1 &1459684224
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +188,7 @@ GameObject:
   - 114: {fileID: 1459684225}
   - 114: {fileID: 1459684227}
   m_Layer: 0
-  m_Name: Script Container
+  m_Name: World Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -224,11 +202,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1459684224}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3dfe8f7fbc77ca45895ecc7b38091b9, type: 3}
+  m_Script: {fileID: 11500000, guid: 6552a84910289da468b2f9abd53a55c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TileFab: {fileID: 4000013159130364, guid: e4df564f290e01743828171a9d3d7b6c, type: 2}
-  activeLevel: 1
+  emptySprite: {fileID: 21300000, guid: 115d40d757913904186b673ac3457fd4, type: 3}
+  grassSprite: {fileID: 21300000, guid: ab9b290c8c7267d478196fdf9a1751ec, type: 3}
 --- !u!4 &1459684226
 Transform:
   m_ObjectHideFlags: 0
@@ -236,7 +214,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1459684224}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.541371, y: -4.423769, z: 3.6730769}
+  m_LocalPosition: {x: -0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -250,8 +228,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1459684224}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09b5e4857bc9fc549a7462321ad6381d, type: 3}
+  m_Script: {fileID: 11500000, guid: a46ee7930e773cd46808ca0cd0711ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Char: {fileID: 4000011909830614, guid: 9fcc596fd9677724caf894e5b3c09ccd, type: 2}
-  ActorList: []
+  circleCursor: {fileID: 1000011843991630, guid: 59debb83631500e4b827bcf304a15d9b,
+    type: 2}

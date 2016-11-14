@@ -33,7 +33,7 @@ public class Combat : MonoBehaviour {
 
 	static void deliverDamage(Human attacker, Human defender, int targetPos){
 		Bone b = new Bone();
-		Arm a = new Arm ();
+		Arm a = new Arm (6, 1);
 		bool severed = false;
 		if (targetPos == 4) {
 			a = defender.LeftArm;
@@ -70,9 +70,7 @@ public class Combat : MonoBehaviour {
 	static bool checkSever(Weapon w, Bone b){
 		return(w.avgDamage > b.health * 1.5);
 	}
-
-
-
+		
 
 	static bool checkHit(Human attacker, Human defender){
 		//TODO
@@ -167,6 +165,8 @@ public class Combat : MonoBehaviour {
 		} while (!PossiblePositions.Contains(selectedValue));
 		return selectedValue;
 	}
+
+
 
 
 	// Use this for initialization

@@ -14,7 +14,7 @@ public class Entity : MonoBehaviour {
 	 * determining its functionality if it isnt a linear relation with health
 	 * 
 	 * */
-	public string Name; //non-unique
+	public string entName; //non-unique
 	public int ID;     //unique and never reused
 	public static int IDMain;  //ALWAYS INCREASE BEFORE USING, IDMAIN SHOULD ALWAYS SHOW THE LAST USED ID NUMBER
 

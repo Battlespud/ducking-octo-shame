@@ -114,7 +114,6 @@ public class TerrainManager : MonoBehaviour {
 
 
 	//TODO: Make a world generator
-	//public GameObject[,] TileArray = new GameObject[10000, 1000];
 	public void GenerateDebugWorld(){
 		Debug.Log ("Starting Worldgen");
 		int x = 0; int y = 0; int z =0;
@@ -124,15 +123,9 @@ public class TerrainManager : MonoBehaviour {
 
 
 		while (x < worldsize + 1) { //Generate tiles one line at a time
-			//GameObject thisobject = Instantiate (TileFab, new Vector3(x, y, z), Quaternion.identity) as GameObject; //spawn the actual prefab (Plane object + tile script) in the game.
 			Transform t = Instantiate(TileFab,new Vector3(x, y, z), Quaternion.identity) as Transform;
-			GameObject g = t.gameObject;
-			TileArray.Add (g);
-			//TileArray.Add ( GameObject.Instantiate(TileFab,new Vector3(x, y, z), Quaternion.identity) as GameObject  );
-			
-		//	Debug.Log(thisobject.ToString());
-		//	TileArray.Add(thisobject);
-		//	new TerrainTile (new Vector3 (x, y, z)); //for debugging
+		//	GameObject g = t.gameObject;
+			TileArray.Add (t.gameObject);
 			x++;
 			if (x == worldsize + 1 && z < worldsize) {
 				x = ZERO;
@@ -161,8 +154,8 @@ public class TerrainManager : MonoBehaviour {
 		}
 
 		activeLevel = ZERO;		
-		ChangeActiveLevel ();  //set appropriate layer active
 		initializeDictionary (); //add tilearray to dictionary
+		ChangeActiveLevel ();  //set appropriate layer active
 	}
 
 
@@ -170,12 +163,13 @@ public class TerrainManager : MonoBehaviour {
 	public void ChangeActiveLevel(){				//scans through theblocks and sets all those not appearing on the current level to inactive in order to save performance on very large maps.
 		foreach (GameObject obj in TileArray) {
 			obj.SetActive(false) ;
-
-			if (obj.transform.position.y == activeLevel) {
+			//TODO
+			/*
+			if (obj.transform.position.y == activeLevel || (activeLevel != 0 && TerrainDictionary[obj.GetComponent<TerrainTile>().coords.y+2].terrainType != TerrainTileParent.TerrainType.Empty)  {
 				obj.SetActive(true);
 			}
 
-
+*/
 
 		}
 		return;

@@ -35,7 +35,7 @@ public class Human : Sentient {
 
 
 	public Human(Gender g, string n){
-		name = n;
+		entName = n;
 		gender = g; 
 		increaseIDMain ();
 		ID = IDMain;

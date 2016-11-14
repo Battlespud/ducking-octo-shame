@@ -60,6 +60,12 @@
      <Compile Include="Assets\Actors\Sentient.cs" />
      <Compile Include="Assets\Actors\SkillSet.cs" />
      <Compile Include="Assets\Main.cs" />
+     <Compile Include="Assets\Revised World Scripts\Cursor\MouseController.cs" />
+     <Compile Include="Assets\Revised World Scripts\Objects\InstalledObject.cs" />
+     <Compile Include="Assets\Revised World Scripts\Objects\LooseObject.cs" />
+     <Compile Include="Assets\Revised World Scripts\Tiles\Tile.cs" />
+     <Compile Include="Assets\Revised World Scripts\World.cs" />
+     <Compile Include="Assets\Revised World Scripts\WorldGenerator.cs" />
      <Compile Include="Assets\Tilework\Combat.cs" />
      <Compile Include="Assets\Tilework\TerrainManager.cs" />
      <Compile Include="Assets\Tilework\TerrainTile.cs" />
