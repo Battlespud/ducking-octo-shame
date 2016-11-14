@@ -8,7 +8,9 @@ public class WorldGenerator : MonoBehaviour {
 	public Sprite emptySprite;
 	public Sprite grassSprite;
 
-	World GameWorld;
+	public static WorldGenerator _instance {get; protected set;}
+
+	public World GameWorld { get; protected set; }
 
 
 
@@ -18,6 +20,7 @@ public class WorldGenerator : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		GameWorld = new World ();
+		_instance = this;
 
 		//Create a Gameobject for each tile in order to display on screen;
 
