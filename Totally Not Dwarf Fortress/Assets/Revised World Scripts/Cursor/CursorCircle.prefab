@@ -20,8 +20,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000013062708498}
   - 212: {fileID: 212000012740599828}
-  - 114: {fileID: 114000014214112814}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CursorCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,24 +34,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011843991630}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 33.335884, y: 48.86191, z: 0}
+  m_LocalPosition: {x: 4.374466, y: 25.446808, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &114000014214112814
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011843991630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a46ee7930e773cd46808ca0cd0711ca1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  circleCursor: {fileID: 0}
 --- !u!212 &212000012740599828
 SpriteRenderer:
   m_ObjectHideFlags: 1

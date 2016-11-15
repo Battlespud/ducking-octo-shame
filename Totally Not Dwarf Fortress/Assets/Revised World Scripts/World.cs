@@ -3,6 +3,15 @@ using System.Collections;
 
 public class World  {
 
+	int activeLevel = 0;
+
+	public void changeLevel(int activeLevl){
+		this.activeLevel = activeLevel;
+		foreach (Tile t in tiles) {
+			//TODO find a way to get Tile_go
+		}
+	}
+
 	Tile[,,] tiles;
 	int x;
 
@@ -45,7 +54,7 @@ public class World  {
 						}
 					}
 				}
-
+		Debug.Log ("Randomized!");
 			}
 
 
@@ -66,7 +75,7 @@ public class World  {
 	}
 
 
-	public World(int x = 50, int y = 50, int z = 5) { //default sizes, can be overwritten tho
+	public World(int x = 50, int y = 50, int z = 2) { //default sizes, can be overwritten tho
 		this.x = x;
 		this.z = z;
 		this.y = y;

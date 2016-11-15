@@ -44,8 +44,8 @@ public class WorldGenerator : MonoBehaviour {
 			}
 		}
 		//for testing
-		GameWorld.RandomizeTiles(); //randomizes tile types then sets graphics to match
 
+		Invoke ("doRandomize", 2f); //Waits 2 seconds then randomizes tiles and updates textures
 
 	}
 
@@ -71,20 +71,17 @@ public class WorldGenerator : MonoBehaviour {
 
 
 
+	void doRandomize(){
+		GameWorld.RandomizeTiles ();
+	}
 
 
-
-	float randomizeTimer = 3f; //how often the tiles should regenerate, in seconds
 
 	
 	// Update is called once per frame
 	void Update () {
-		randomizeTimer -= Time.deltaTime;
-		if (randomizeTimer < 0) {
-			GameWorld.RandomizeTiles ();
-			randomizeTimer = 3f;
-			Debug.Log ("Randomized!");
-		}
+
+
 
 
 	}
