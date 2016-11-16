@@ -5,6 +5,9 @@ public class World  {
 
 	int activeLevel = 0;
 
+	public const int defaultWorldSize = 25;
+	public const int maxLayers = 2;
+
 	public void changeLevel(int activeLevl){
 		this.activeLevel = activeLevel;
 		foreach (Tile t in tiles) {
@@ -75,7 +78,7 @@ public class World  {
 	}
 
 
-	public World(int x = 50, int y = 50, int z = 2) { //default sizes, can be overwritten tho
+	public World(int x = defaultWorldSize, int y = defaultWorldSize, int z = maxLayers) { //default sizes, can be overwritten tho
 		this.x = x;
 		this.z = z;
 		this.y = y;

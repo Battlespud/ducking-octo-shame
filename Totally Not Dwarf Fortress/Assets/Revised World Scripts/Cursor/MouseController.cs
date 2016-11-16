@@ -63,9 +63,9 @@ public class MouseController : MonoBehaviour {
 	
 		if (tileUnderMouse != null) { //check for if we went off the map
 			circleCursor.SetActive (true);
-			Vector3 cursorPosition = new Vector3 (tileUnderMouse.X, tileUnderMouse.Y, -1);
+			Vector3 cursorPosition = new Vector3 (tileUnderMouse.X, tileUnderMouse.Y, -1); 
 		} else {
-			circleCursor.SetActive (false);
+			circleCursor.SetActive (false); //if no tile then dont show the cursor
 		}
 
 
@@ -80,8 +80,9 @@ public class MouseController : MonoBehaviour {
 			Camera.main.transform.Translate( diff ); //move the camera the same amount our mouse moved
 		}
 
+		//Handle Camera Zooming via scroll wheel
 		if( Input.GetAxis ("Mouse ScrollWheel") != 0f ) {	// zoom function.  Works, but requires a switch to perspective camera and changes to other parts of the script to compoensate.
-			switch (Camera.main.orthographic) {
+			switch (Camera.main.orthographic) { //different camera modes handle zooming differently.  Perspective actually moves the camera, while ortho changes the canvas size to simulate it
 			case true:
 				{	
 					float f = Camera.main.orthographicSize - Input.GetAxis ("Mouse ScrollWheel")*orthoZoomSpeed;
@@ -98,18 +99,34 @@ public class MouseController : MonoBehaviour {
 					}
 					break;
 				}
-
 			}
+		} //end of zooming
 
 
 
-
+		//Handle Left Mouse Clicks
+		if (Input.GetMouseButtonDown (0)) { //on left mouse button click
+			if (tileUnderMouse != null) {
+				switch (tileUnderMouse.Type) {
+				case Tile.TileType.Empty:
+					tileUnderMouse.Type = Tile.TileType.Floor;
+					break;
+				case Tile.TileType.Floor:
+					tileUnderMouse.Type = Tile.TileType.Empty;
+					break;		
+				}
+			}
 		}
 
 
-		//TODO add wasd
+		//TODO add wasd scrolling
 
+		//grab and save the current mouse position to use as a reference for next frame.
 		lastFramePosition = Camera.main.ScreenToWorldPoint( Input.mousePosition );
 		lastFramePosition.z = 0;
-	}
+	} //end of update
+
+
+
+
 }

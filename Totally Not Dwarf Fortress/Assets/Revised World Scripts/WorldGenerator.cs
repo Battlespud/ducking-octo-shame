@@ -4,7 +4,8 @@ using System.Collections;
 public class WorldGenerator : MonoBehaviour {
 
 
-	//remove later
+	//refactor later
+	//REMEMBER TO SET PIVOT POINT TO BOTTOM LEFT CORNER IN INSPECTOR OR WILL NOT LINE UP PROPERLY AND BIG CLICKING ERRORS WILL OCCUR!!!!
 	public Sprite emptySprite;
 	public Sprite grassSprite;
 
@@ -22,8 +23,11 @@ public class WorldGenerator : MonoBehaviour {
 		GameWorld = new World ();
 		_instance = this;
 
+		//Move the camera to the center of the world
+		Camera.main.transform.position = new Vector3(World.defaultWorldSize/2, World.defaultWorldSize/2, Camera.main.transform.position.z);
+		Camera.main.orthographicSize = World.defaultWorldSize/2 + 1; //set so slightly more than whole world is visible
+	
 		//Create a Gameobject for each tile in order to display on screen;
-
 		for (int x = 0; x < GameWorld.X; x++) {
 			for (int y = 0; y < GameWorld.Y; y++) {
 				for (int z = 0; z < GameWorld.Z; z++) {
@@ -45,7 +49,7 @@ public class WorldGenerator : MonoBehaviour {
 		}
 		//for testing
 
-		Invoke ("doRandomize", 2f); //Waits 2 seconds then randomizes tiles and updates textures
+		Invoke ("doRandomize", 1f); //Waits 2 seconds then randomizes tiles and updates textures
 
 	}
 
