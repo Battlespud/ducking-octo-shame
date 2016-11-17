@@ -1,0 +1,35 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{1C6D85EA-003E-9A33-D9A8-8E3AE4BE87F5}") = "Fumble Righter", "Assembly-CSharp-firstpass.csproj", "{78074967-2046-EE31-D7AA-CF24489757CA}"
+EndProject
+Project("{1C6D85EA-003E-9A33-D9A8-8E3AE4BE87F5}") = "Fumble Righter", "Assembly-CSharp.csproj", "{A6D47E63-6021-D942-FEFD-3E48B947F9EA}"
+EndProject
+Project("{1C6D85EA-003E-9A33-D9A8-8E3AE4BE87F5}") = "Fumble Righter", "Assembly-CSharp-Editor.csproj", "{B279A913-2DD1-81CD-C042-E54ED44F7FF2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78074967-2046-EE31-D7AA-CF24489757CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78074967-2046-EE31-D7AA-CF24489757CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78074967-2046-EE31-D7AA-CF24489757CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78074967-2046-EE31-D7AA-CF24489757CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6D47E63-6021-D942-FEFD-3E48B947F9EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6D47E63-6021-D942-FEFD-3E48B947F9EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6D47E63-6021-D942-FEFD-3E48B947F9EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6D47E63-6021-D942-FEFD-3E48B947F9EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B279A913-2DD1-81CD-C042-E54ED44F7FF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B279A913-2DD1-81CD-C042-E54ED44F7FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B279A913-2DD1-81CD-C042-E54ED44F7FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B279A913-2DD1-81CD-C042-E54ED44F7FF2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
