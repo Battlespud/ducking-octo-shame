@@ -7,41 +7,45 @@ public class Player : MonoBehaviour {
 	void Start () {
 		
 	}
-	public float mS = 1f;
+	float mS = 1f;
+	KeyCode N = KeyCode.UpArrow;
+	KeyCode E = KeyCode.RightArrow;
+	KeyCode S = KeyCode.DownArrow;
+	KeyCode W = KeyCode.LeftArrow;
 	// Update is called once per frame
 	void Update () {
 		
 		//x,y,z  x is left and right, z is up and down, y is vertical
 		//up N
-		if(Input.GetKey(KeyCode.UpArrow)){
+		if(Input.GetKey(N)){
 			transform.Translate (0,0,1 * mS * Time.deltaTime);
 		}
 		//up right NE
-		if(Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.RightArrow)){
+		if(Input.GetKey(N) && Input.GetKey(E)){
 			transform.Translate (1 * (mS * Time.deltaTime)/4, 0, 1 * (mS * Time.deltaTime)/4);
 		}
 		//right E
-		if(Input.GetKey(KeyCode.RightArrow)){
+		if(Input.GetKey(E)){
 			transform.Translate (1 * mS * Time.deltaTime, 0, 0);
 		}
 		//right down SE
-		if(Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.DownArrow)){
+		if(Input.GetKey(S) && Input.GetKey(E)){
 			transform.Translate (1 * (mS * Time.deltaTime)/4, 0, -1 * (mS * Time.deltaTime)/4);
 		}
 		//down S
-		if(Input.GetKey(KeyCode.DownArrow)){
+		if(Input.GetKey(S)){
 			transform.Translate (0, 0, -1 * mS * Time.deltaTime);
 		}
 		//down left SW
-		if(Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftArrow)){
+		if(Input.GetKey(S) && Input.GetKey(W)){
 			transform.Translate (-1 * (mS * Time.deltaTime)/4, 0, -1 * (mS * Time.deltaTime)/4);
 		}
 		//left W
-		if(Input.GetKey(KeyCode.LeftArrow)){
+		if(Input.GetKey(W)){
 			transform.Translate (-1 * mS * Time.deltaTime, 0, 0);
 		}
 		//left up NW
-		if (Input.GetKey (KeyCode.LeftArrow) && Input.GetKey (KeyCode.UpArrow)) {
+		if (Input.GetKey (N) && Input.GetKey (W)) {
 			transform.Translate (-1 * (mS * Time.deltaTime)/4, 0, 1 * (mS * Time.deltaTime)/4);
 		} 
 		//inc spd
