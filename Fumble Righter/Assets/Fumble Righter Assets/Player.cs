@@ -2,15 +2,24 @@
 using System.Collections;
 
 public class Player : MonoBehaviour {
-	PlayerControls plyrCtrl = new PlayerControls (Input.GetKey());
+	//PlayerControls plyrCtrl = new PlayerControls (Input.GetKey());
 	// Use this for initialization
 	void Start () {
 		
 	}
 
+
+	float movementSpeed = 1;
+
+	void movePlayer(){
+		transform.Translate(PlayerControls.movePlayer (movementSpeed));
+
+	}
+
+
 	// Update is called once per frame
 	void Update () {
-		plyrCtrl.movePlayer ();
+		movePlayer ();
 		/*
 		//x,y,z  x is left and right, z is up and down, y is vertical
 		//up N
