@@ -2,19 +2,16 @@
 using System.Collections;
 
 public class Player : MonoBehaviour {
-
+	PlayerControls plyrCtrl = new PlayerControls (Input.GetKey());
 	// Use this for initialization
 	void Start () {
 		
 	}
-	float mS = 1f;
-	KeyCode N = KeyCode.UpArrow;
-	KeyCode E = KeyCode.RightArrow;
-	KeyCode S = KeyCode.DownArrow;
-	KeyCode W = KeyCode.LeftArrow;
+
 	// Update is called once per frame
 	void Update () {
-		
+		plyrCtrl.movePlayer ();
+		/*
 		//x,y,z  x is left and right, z is up and down, y is vertical
 		//up N
 		if(Input.GetKey(N)){
@@ -67,5 +64,6 @@ public class Player : MonoBehaviour {
 			mS = 20;
 			Debug.Log ("Move speed will not exceed 20");
 		}
+		*/
 		}
 	}
