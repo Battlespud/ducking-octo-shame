@@ -14,5 +14,8 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		movePlayer ();
+		if (transform.position.y > 0) {
+			transform.Translate (0, -1 * Time.deltaTime , 0);
+		}
 		}
 	}

@@ -60,7 +60,14 @@ public static class PlayerControls{
 		} else {
 			Debug.Log ("Not moving.");
 		}
-
+		if (Input.GetKey (KeyCode.Space)) {
+			plyrMvmnt += new Vector3 (0, 10, 0);
+		}
+		/*
+		 * if (Input.GetKey (KeyCode.LeftShift)) {
+			plyrMvmnt += new Vector3 (0, -1, 0);
+		}
+*/
 		return plyrMvmnt * Time.deltaTime;
 	}
 
