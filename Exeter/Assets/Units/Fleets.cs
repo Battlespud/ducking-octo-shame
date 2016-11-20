@@ -25,6 +25,26 @@ public class Fleets : NetworkBehaviour {
 		fleetName = "debugFleet";
 	}
 
+
+
+
+
+	void DrawPath(Vector3 start, Vector3 end, Color color, float duration)
+	{
+		GameObject myLine = new GameObject();
+		myLine.transform.position = start;
+		myLine.AddComponent<LineRenderer>();
+		LineRenderer lr = myLine.GetComponent<LineRenderer>();
+		lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
+		lr.SetColors(color, color);
+		lr.SetWidth(0.1f, 0.1f);
+		lr.SetPosition(0, start);
+		lr.SetPosition(1, end);
+		GameObject.Destroy(myLine, duration);
+	}
+
+
+
 	public  void processMovement(){
 
 		if (targetPosition != null && targetPosition != position && !((Vector3.Distance(targetPosition,position) < 10) && angularThrustEfficiency < .95)&& !((Vector3.Distance(targetPosition,position) < 20) && angularThrustEfficiency < .85)&& !((Vector3.Distance(targetPosition,position) < 30) && angularThrustEfficiency < .75)) {
@@ -113,6 +133,7 @@ public class Fleets : NetworkBehaviour {
 			if (targetPosition != null) {
 				LookTowards ();
 			}
+
 		}
 	}
 
@@ -158,6 +179,9 @@ public class Fleets : NetworkBehaviour {
 		}
 		movementSpeed = mMovementSpeed; //TODO
 	}
+
+
+
 
 
 
@@ -239,6 +263,9 @@ public class Fleets : NetworkBehaviour {
 
 		processMovement ();
 		fleetGo.transform.position = position;
+		if (position != targetPosition) {
+			DrawPath (position, targetPosition, Color.green, Time.deltaTime);
+		}
 
 	}
 
