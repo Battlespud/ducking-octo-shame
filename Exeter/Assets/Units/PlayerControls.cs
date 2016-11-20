@@ -20,6 +20,9 @@ public class PlayerControls : NetworkBehaviour {
 	float timescaleLast = 1f;
 	float targetTimeScale = 1f;
 
+	const float timeScaleMax = 2f;
+	const float timeScaleMin = .25f;
+
 	//these are used to control camera zoom levels
 	const int perspZoomInLimit = 5; //minimum distance from plane
 	const int perspZoomOutLimit = 50; //max distance from plane
@@ -83,7 +86,7 @@ public class PlayerControls : NetworkBehaviour {
 
 
 		//Handle Left Mouse Clicks
-		if (Input.GetMouseButtonDown(2)) { //on middle mouse button click
+		if (Input.GetKeyDown(KeyCode.F)) { //on middle mouse button click
 			Debug.Log (currFramePosition);
 			Instantiate (sprites.FleetPrefab, currFramePosition, Quaternion.identity);
 		}
@@ -139,8 +142,8 @@ public class PlayerControls : NetworkBehaviour {
 			}
 		}
 
-		if(targetTimeScale >= 1.5f) { targetTimeScale = 1.5f;}
-		if (targetTimeScale <= .25f) {targetTimeScale = .25f;	}
+		if(targetTimeScale >= timeScaleMax) { targetTimeScale = timeScaleMax;}
+		if (targetTimeScale <= timeScaleMin) {targetTimeScale = timeScaleMin;	}
 
 		if (paused) {
 			Time.timeScale = 0f;
@@ -156,7 +159,7 @@ public class PlayerControls : NetworkBehaviour {
 		lastFramePosition = Camera.main.ScreenToWorldPoint( Input.mousePosition );
 		lastFramePosition.z = 0;
 
-		selFleetArray = selectedFleets.ToArray ();
+		selFleetArray = selectedFleets.ToArray (); //only for debugging purposes~
 
 
 	} //end of update
