@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 
-public class Fleets : MonoBehaviour {
+public class Fleets : NetworkBehaviour {
 
 
 	/*All movement and actions are performed by fleets rather than individual ships.  Though a fleet can consist of a single ship of course.
@@ -14,15 +15,13 @@ public class Fleets : MonoBehaviour {
 
 
 	//Statics_________________________________________________________
+	List<Fleets> FleetsList;
 
-
-	public static List<Fleets> FleetsList = new List<Fleets>(); //list of all fleets for organization
 	public static Sprite fleetSprite;
 
 	Vector3 minRange = new Vector3 (-29.4f,-31.8f,0f) - new Vector3 (-10.3f, -31f, 0f);
 
 	public void SetupFleets(){
-		Debug.Log ("building a fleet");
 		fleetName = "debugFleet";
 	}
 
@@ -167,6 +166,10 @@ public class Fleets : MonoBehaviour {
 		setupGo ();
 		SetupFleets ();
 		FleetShips = new List<Ships> ();
+		FleetsList = GameObject.FindGameObjectWithTag ("Lists").GetComponent<Lists>().FleetsList;
+		AddList ();
+
+
 		Debug.Log ("Fleet created: " + fleetName);
 
 	}
@@ -201,11 +204,13 @@ public class Fleets : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		setMovementSpeed ();
-		if (!registered) {
-			Debug.Log ("Registering " + fleetName);
-			AddList ();
+
+		if (!localPlayerAuthority) {
+			return;
 		}
+
+		setMovementSpeed ();
+	
 
 		//Cancer math sorry__________________
 		

@@ -2,14 +2,19 @@
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 
-public class PlayerControls : MonoBehaviour {
+public class PlayerControls : NetworkBehaviour {
 
 	Vector3 lastFramePosition;
+	Lists lists;
+
 
 	bool paused = false;
-
+	List<Fleets> FleetsList;
 	public List<Fleets> selectedFleets; 
+	public Fleets[] selFleetArray; //debugging only
+
 	Sprites sprites;
 
 	float timescaleLast = 1f;
@@ -20,20 +25,27 @@ public class PlayerControls : MonoBehaviour {
 	const int perspZoomOutLimit = 50; //max distance from plane
 	const int perspZoomSpeed = 15;
 
-	const int orthoZoomInLimit = 5; //smallest size
-	const int orthoZoomOutLimit = 45; //max size of orthographic view, bigger is much more intensive
-	const int orthoZoomSpeed = 10; //multiplier for mouse input
+	const int orthoZoomInLimit = 10; //smallest size
+	const int orthoZoomOutLimit = 200; //max size of orthographic view, bigger is much more intensive
+	const int orthoZoomSpeed = 25; //multiplier for mouse input
 
 	// Use this for initialization
 	void Start () {
 		sprites = GetComponentInParent<Sprites> ();
+		FleetsList = GameObject.FindGameObjectWithTag ("Lists").GetComponent<Lists> ().FleetsList;
 	}
 
 	// Update is called once per frame
 	void Update () {
 
+		//Check if this is the correct player
+		if (!isLocalPlayer) {
+			return; //aborts if not the correct player
+		}
+
 		Vector3 currFramePosition = Camera.main.ScreenToWorldPoint( Input.mousePosition );  //poll where the mouse is at the start of each frame and store it
 		currFramePosition.z = 0; //always keep the mouse 1 layer closer to the camera than our highest layer in order to keep it visible.
+		//be very careful changing this as it can break selection
 
 
 		Vector3 diff = new Vector3(0,0,0);  //storage container for the difference between where we were and where we moved the mouse to.
@@ -77,20 +89,21 @@ public class PlayerControls : MonoBehaviour {
 		}
 
 		if (Input.GetMouseButtonDown(0) && !Input.GetKey(KeyCode.A)) { //on left mouse button click, selection
-			Debug.Log("Raycasting..");
-			RaycastHit2D hit = Physics2D.Raycast(new Vector3(currFramePosition.x, currFramePosition.y, -10),Vector3.forward*20, Mathf.Infinity);
+			Debug.Log("Attempting selection!");
 			Debug.DrawRay (new Vector3 (currFramePosition.x, currFramePosition.y, -10), Vector3.forward*20, Color.blue,10);
-			if (hit.collider != null) {
-				Debug.Log ("Hitting " + hit.collider.name);
-			} else {
-				Debug.Log ("Hit nothing!");
-			}
 			//dumb way without raycasts
-			foreach (Fleets fleet in Fleets.FleetsList) {
-				Collider coll = fleet.fleetGo.GetComponent<Collider> ();
-				if(coll.bounds.Contains(new Vector3(currFramePosition.x,currFramePosition.y,coll.transform.position.z))){
-					changeSelection (fleet);
-					Debug.Log ("Selected fleet: " + fleet.fleetName);
+			foreach (Fleets fleet in FleetsList) {
+				Debug.Log ("Parsing Fleets");
+				if (fleet.localPlayerAuthority) {
+					Collider coll = fleet.fleetGo.GetComponent<Collider> ();
+					if (coll.bounds.Contains (new Vector3 (currFramePosition.x, currFramePosition.y, coll.transform.position.z))) {
+						changeSelection (fleet);
+						Debug.Log ("Selected fleet: " + fleet.fleetName);
+					} else {
+						Debug.Log (new Vector3 (currFramePosition.x, currFramePosition.y, coll.transform.position.z) + " does not match an owned fleet");
+					}
+				} else {
+					Debug.Log ("currently parsed fleet isnt owned by player, skipping");
 				}
 			}
 
@@ -143,9 +156,9 @@ public class PlayerControls : MonoBehaviour {
 		lastFramePosition = Camera.main.ScreenToWorldPoint( Input.mousePosition );
 		lastFramePosition.z = 0;
 
+		selFleetArray = selectedFleets.ToArray ();
 
 
-	
 	} //end of update
 
 	void changeSelection(Fleets fleet){
