@@ -45,7 +45,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Units\Entity.cs" />
      <Compile Include="Assets\Units\Fleets.cs" />
      <Compile Include="Assets\Units\PlayerControls.cs" />
      <Compile Include="Assets\Units\Ships.cs" />
