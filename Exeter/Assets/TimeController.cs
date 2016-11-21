@@ -33,7 +33,7 @@ public class TimeController : NetworkBehaviour {
 
 	[Command]
 	public void CmdSpeedUp(string id){
-		targetTimeScale += .25f;
+		targetTimeScale += .5f;
 		Debug.Log ("Sped up to " + Time.timeScale + " by " + id);
 	}
 
