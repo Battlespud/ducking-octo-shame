@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Lists.cs" />
+     <Compile Include="Assets\NetworkPlayer.cs" />
      <Compile Include="Assets\Space Graphics Toolkit\Examples\Basic Pack\Scripts\SgtDebugMesh.cs" />
      <Compile Include="Assets\Space Graphics Toolkit\Examples\Basic Pack\Scripts\SgtDepthTextureMode.cs" />
      <Compile Include="Assets\Space Graphics Toolkit\Examples\Basic Pack\Scripts\SgtGravityReceiver.cs" />
@@ -136,6 +137,7 @@
      <Compile Include="Assets\Space Graphics Toolkit\Scripts\Player\SgtThrusterFlare.cs" />
      <Compile Include="Assets\Space Graphics Toolkit\Scripts\Player\SgtThrusterVisibility.cs" />
      <Compile Include="Assets\Space Graphics Toolkit\Scripts\Player\SgtWrappedStarfield.cs" />
+     <Compile Include="Assets\TimeController.cs" />
      <Compile Include="Assets\Units\Fleets.cs" />
      <Compile Include="Assets\Units\Planets.cs" />
      <Compile Include="Assets\Units\PlayerControls.cs" />

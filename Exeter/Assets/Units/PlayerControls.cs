@@ -8,20 +8,17 @@ public class PlayerControls : NetworkBehaviour {
 
 	Vector3 lastFramePosition;
 	Lists lists;
+	TimeController timeController;
 
+	public Camera cam;
 
-	bool paused = false;
 	List<Fleets> FleetsList;
 	public List<Fleets> selectedFleets; 
 	public Fleets[] selFleetArray; //debugging only
 
 	Sprites sprites;
 
-	float timescaleLast = 1f;
-	float targetTimeScale = 1f;
-
-	const float timeScaleMax = 2f;
-	const float timeScaleMin = .25f;
+	NetworkPlayer netPlay;
 
 	//these are used to control camera zoom levels
 	const int perspZoomInLimit = 5; //minimum distance from plane
@@ -34,6 +31,10 @@ public class PlayerControls : NetworkBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		timeController = GameObject.FindGameObjectWithTag ("Time").GetComponent<TimeController>();
+		netPlay = GetComponentInParent<NetworkPlayer> ();
+		cam = GetComponentInParent<NetworkPlayer> ().playerCam;
+
 		sprites = GetComponentInParent<Sprites> ();
 		FleetsList = GameObject.FindGameObjectWithTag ("Lists").GetComponent<Lists> ().FleetsList;
 	}
@@ -46,7 +47,7 @@ public class PlayerControls : NetworkBehaviour {
 			return; //aborts if not the correct player
 		}
 
-		Vector3 currFramePosition = Camera.main.ScreenToWorldPoint( Input.mousePosition );  //poll where the mouse is at the start of each frame and store it
+		Vector3 currFramePosition = cam.ScreenToWorldPoint( Input.mousePosition );  //poll where the mouse is at the start of each frame and store it
 		currFramePosition.z = 0; //always keep the mouse 1 layer closer to the camera than our highest layer in order to keep it visible.
 		//be very careful changing this as it can break selection
 
@@ -58,25 +59,25 @@ public class PlayerControls : NetworkBehaviour {
 
 			diff = lastFramePosition - currFramePosition;  //determine difference in each vector component
 			diff.z = 0; //prevent dragging along the z layer by accident.  Prevents major glitches, do not alter
-			Camera.main.transform.Translate( diff ); //move the camera the same amount our mouse moved
+			cam.transform.Translate( diff ); //move the camera the same amount our mouse moved
 		}
 
 		//Handle Camera Zooming via scroll wheel
 		if( Input.GetAxis ("Mouse ScrollWheel") != 0f ) {	// zoom function.  Works, but requires a switch to perspective camera and changes to other parts of the script to compoensate.
-			switch (Camera.main.orthographic) { //different camera modes handle zooming differently.  Perspective actually moves the camera, while ortho changes the canvas size to simulate it
+			switch (cam.orthographic) { //different camera modes handle zooming differently.  Perspective actually moves the camera, while ortho changes the canvas size to simulate it
 			case true:
 				{	
-					float f = Camera.main.orthographicSize - Input.GetAxis ("Mouse ScrollWheel")*orthoZoomSpeed;
+					float f = cam.orthographicSize - Input.GetAxis ("Mouse ScrollWheel")*orthoZoomSpeed;
 					if (f > orthoZoomInLimit && f < orthoZoomOutLimit) {//how close you can zoom in or how far y ou can zoom out
-						Camera.main.orthographicSize = f;
+						cam.orthographicSize = f;
 					}
 					break;
 				}
 			case false:
 				{
 					diff.z = Input.GetAxis ("Mouse ScrollWheel")*perspZoomSpeed;
-					if ((diff.z < 0 && Camera.main.transform.position.z > perspZoomOutLimit*-1) || (diff.z > 0 && Camera.main.transform.position.z < perspZoomInLimit*-1)) {
-						Camera.main.transform.Translate (diff);
+					if ((diff.z < 0 && cam.transform.position.z > perspZoomOutLimit*-1) || (diff.z > 0 && cam.transform.position.z < perspZoomInLimit*-1)) {
+						cam.transform.Translate (diff);
 					}
 					break;
 				}
@@ -123,40 +124,25 @@ public class PlayerControls : NetworkBehaviour {
 
 		//Timescale stuff_______________________________________________________
 		if (Input.GetKeyDown(KeyCode.Equals)) { //on left mouse button click
-			targetTimeScale += .25f;
-			Debug.Log(Time.timeScale);
+			timeController.CmdSpeedUp(netPlay.playerID);
 		}
 
 		if (Input.GetKeyDown(KeyCode.Minus)) { //on left mouse button click
-			targetTimeScale -= .25f;
-			Debug.Log(Time.timeScale);
+			timeController.CmdSlowDown(netPlay.playerID);
 		}
 
 		if (Input.GetKeyDown(KeyCode.Space)) { //on left mouse button click
-			if (paused) {
-				paused = false;
-				Debug.Log ("Unpause");
-			} else {
-				paused = true;
-				Debug.Log ("Pause");
-			}
+			timeController.CmdPause(netPlay.playerID);
 		}
 
-		if(targetTimeScale >= timeScaleMax) { targetTimeScale = timeScaleMax;}
-		if (targetTimeScale <= timeScaleMin) {targetTimeScale = timeScaleMin;	}
 
-		if (paused) {
-			Time.timeScale = 0f;
-		} else {
-			Time.timeScale = targetTimeScale;
-		}
 
 		//______________________________________________________________________
 
 		//TODO add wasd scrolling
 
 		//grab and save the current mouse position to use as a reference for next frame.
-		lastFramePosition = Camera.main.ScreenToWorldPoint( Input.mousePosition );
+		lastFramePosition = cam.ScreenToWorldPoint( Input.mousePosition );
 		lastFramePosition.z = 0;
 
 		selFleetArray = selectedFleets.ToArray (); //only for debugging purposes~
