@@ -8,6 +8,9 @@ public class Sprites : MonoBehaviour {
 	public Sprite FleetSprite;
 	public Sprite ShipSprite;
 
+
+
+
 	public Transform FleetPrefab;
 
 
@@ -21,7 +24,6 @@ public class Sprites : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame

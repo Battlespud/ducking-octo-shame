@@ -131,6 +131,7 @@ public class Fleets : NetworkBehaviour {
 		set {
 			targetPosition = value;
 			if (targetPosition != null) {
+				
 				LookTowards ();
 			}
 
@@ -141,10 +142,10 @@ public class Fleets : NetworkBehaviour {
 
 	void LookTowards(){
 		Vector3 dir = targetPosition - position;
-		var angle = Mathf.Atan2 (dir.y, dir.x) * Mathf.Rad2Deg - 90; //subtract 90 because our sprites front is up instead of right
-
+		var angle = Mathf.Atan2 (dir.y, dir.x) * Mathf.Rad2Deg +180; //subtract 90 because our sprites front is up instead of right
 		//fleetGo.transform.rotation;
 		targetRot = Quaternion.AngleAxis (angle, Vector3.forward);
+		targetRot.eulerAngles.Set(-90, targetRot.eulerAngles.y, targetRot.eulerAngles.z);
 	}
 
 	void updateMovement(){
@@ -213,8 +214,8 @@ public class Fleets : NetworkBehaviour {
 		}
 
 		fleetGo.transform.position.Set(position.x, position.y, position.z);
-		fleetGo.AddComponent<SpriteRenderer>();
-		fleetGo.GetComponent<SpriteRenderer> ().sprite = fleetSprite;
+	//	fleetGo.AddComponent<SpriteRenderer>();
+		//fleetGo.GetComponent<SpriteRenderer> ().sprite = fleetSprite;
 		//fleetGo.transform.position = new Vector3 (position.x, position.y, 0);
 
 	}
@@ -240,7 +241,6 @@ public class Fleets : NetworkBehaviour {
 		
 
 		fleetGo.transform.rotation = Quaternion.Slerp (fleetGo.transform.rotation, targetRot, .5f*Time.deltaTime);
-
 		angularThrustEfficiency = 1f - (Quaternion.Angle (targetRot, fleetGo.transform.rotation)) / 180f;
 
 		/*
@@ -263,6 +263,9 @@ public class Fleets : NetworkBehaviour {
 
 		processMovement ();
 		fleetGo.transform.position = position;
+		//fleetGo.transform.Rotate(new Vector3(-90,fleetGo.transform.rotation.eulerAngles.y,fleetGo.transform.rotation.eulerAngles.z));
+
+
 		if (position != targetPosition) {
 			DrawPath (position, targetPosition, Color.green, Time.deltaTime);
 		}
