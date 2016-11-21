@@ -22,5 +22,7 @@ public class Planets : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//planetGo.transform.Rotate (0, 0, 2 * Time.deltaTime);
+		position = planetGo.transform.position;
+
 	}
 }

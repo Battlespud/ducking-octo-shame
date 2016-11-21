@@ -45,9 +45,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Clock.cs" />
      <Compile Include="Assets\Lists.cs" />
      <Compile Include="Assets\NetworkPlayer.cs" />
      <Compile Include="Assets\OrbitGeneric.cs" />
+     <Compile Include="Assets\QuickBar.cs" />
      <Compile Include="Assets\Space Graphics Toolkit\Examples\Basic Pack\Scripts\SgtDebugMesh.cs" />
      <Compile Include="Assets\Space Graphics Toolkit\Examples\Basic Pack\Scripts\SgtDepthTextureMode.cs" />
      <Compile Include="Assets\Space Graphics Toolkit\Examples\Basic Pack\Scripts\SgtGravityReceiver.cs" />

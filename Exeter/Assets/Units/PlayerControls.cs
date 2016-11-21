@@ -25,16 +25,16 @@ public class PlayerControls : NetworkBehaviour {
 	const int perspZoomOutLimit = 50; //max distance from plane
 	const int perspZoomSpeed = 15;
 
-	const int orthoZoomInLimit = 10; //smallest size
-	const int orthoZoomOutLimit = 200; //max size of orthographic view, bigger is much more intensive
-	const int orthoZoomSpeed = 25; //multiplier for mouse input
+	const int orthoZoomInLimit = 200; //smallest size
+	const int orthoZoomOutLimit = 5000; //max size of orthographic view, bigger is much more intensive
+	const int orthoZoomSpeed = 1000; //multiplier for mouse input
 
 	// Use this for initialization
 	void Start () {
 		timeController = GameObject.FindGameObjectWithTag ("Time").GetComponent<TimeController>();
 		netPlay = GetComponentInParent<NetworkPlayer> ();
 		cam = GetComponentInParent<NetworkPlayer> ().playerCam;
-
+		cam.orthographicSize = orthoZoomOutLimit;
 		sprites = GetComponentInParent<Sprites> ();
 		FleetsList = GameObject.FindGameObjectWithTag ("Lists").GetComponent<Lists> ().FleetsList;
 	}

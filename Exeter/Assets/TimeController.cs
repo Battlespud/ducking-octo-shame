@@ -9,7 +9,7 @@ public class TimeController : NetworkBehaviour {
 	[SyncVar]public float targetTimeScale = 1f;
 	[SyncVar]public bool paused = false;
 
-	const float timeScaleMax = 5f;
+	const float timeScaleMax = 25f;
 	const float timeScaleMin = .25f;
 
 	[Command]
@@ -27,13 +27,13 @@ public class TimeController : NetworkBehaviour {
 
 	[Command]
 	public void CmdSlowDown(string id){
-		targetTimeScale -= .25f;
+		targetTimeScale -= .5f;
 		Debug.Log ("Slowed to " + Time.timeScale + " by " + id);
 	}
 
 	[Command]
 	public void CmdSpeedUp(string id){
-		targetTimeScale += .5f;
+		targetTimeScale += 1f;
 		Debug.Log ("Sped up to " + Time.timeScale + " by " + id);
 	}
 
