@@ -1,9 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class TimeController : NetworkBehaviour {
 
+	Text timeDilationText;
+	[SyncVar] public string timeDilationString;
+
+	[SyncVar] bool autoPauseModeEnabled = false;
 
 	//Timescales
 	[SyncVar]public float targetTimeScale = 1f;
@@ -41,18 +46,21 @@ public class TimeController : NetworkBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		timeDilationText = gameObject.GetComponentInChildren<Text> ();
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if(targetTimeScale >= timeScaleMax) { targetTimeScale = timeScaleMax;}
 		if (targetTimeScale <= timeScaleMin) {targetTimeScale = timeScaleMin;	}
-
+		if(Time.timeScale == 1.25f){Time.timeScale = 1f;}
 		if (paused) {
 			Time.timeScale = 0f;
 		} else {
 			Time.timeScale = targetTimeScale;
 		}
+		timeDilationString = Time.timeScale.ToString();
+		timeDilationText.text = timeDilationString;
 	}
 }

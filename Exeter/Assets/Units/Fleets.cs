@@ -11,6 +11,7 @@ public class Fleets : NetworkBehaviour {
 	Fleets move at the speed of their slowest member
 	They reduce speed instantly on taking damage or remove lagging ships depending on settings */
 
+	//tbh this will likely become a ship class rather than fleets.  
 
 
 
@@ -18,15 +19,42 @@ public class Fleets : NetworkBehaviour {
 	List<Fleets> FleetsList;
 
 	public static Sprite fleetSprite;
+	ParticleSystem selectionEffect;
+
+	BoxCollider coll;
+	Vector3 collVecOrig;
+	Vector3 collVecSprite;
 
 	Vector3 minRange = new Vector3 (-29.4f,-31.8f,0f) - new Vector3 (-10.3f, -31f, 0f);
 
-	public void SetupFleets(){
-		fleetName = "debugFleet";
+	float rotationSpeed = .2f;
+
+	bool setGlow;
+
+	public bool SetGlow { //enable or disable the glow effect 
+		get {
+			return setGlow;
+		}
+		set {
+			setGlow = value;
+			selectionEffect.gameObject.SetActive( value);
+		}
 	}
 
 
 
+
+	public void enableSprite(){
+		sr.enabled = true;
+		coll.size = collVecSprite; //resize collider to sprite
+		Debug.Log ("Sprites enabled");
+	}
+
+	public void disableSprite(){
+		sr.enabled = false;
+		coll.size = collVecOrig;
+		Debug.Log ("Sprites Disabled");
+	}
 
 
 	void DrawPath(Vector3 start, Vector3 end, Color color, float duration)
@@ -48,6 +76,7 @@ public class Fleets : NetworkBehaviour {
 	public  void processMovement(){
 
 		if (targetPosition != null && targetPosition != position && !((Vector3.Distance(targetPosition,position) < 10) && angularThrustEfficiency < .95)&& !((Vector3.Distance(targetPosition,position) < 20) && angularThrustEfficiency < .85)&& !((Vector3.Distance(targetPosition,position) < 30) && angularThrustEfficiency < .75)) {
+			//Change effective movement speed based on angle to target.
 			if (angularThrustEfficiency >= .92) {
 				position = Vector3.MoveTowards (position, targetPosition + fleetGo.transform.up*(1-angularThrustEfficiency), movementSpeed * Time.deltaTime*angularThrustEfficiency);
 
@@ -101,12 +130,15 @@ public class Fleets : NetworkBehaviour {
 
 	public bool registered = false; //has been added to the list of all fleets
 
+	//Gameobject that represents this fleet
 	public GameObject fleetGo;
 
+	SpriteRenderer sr;
 
 	public float movementSpeed; //current move speed
 	public float mMovementSpeed; //max move speed
 
+	//Modifier to movement speed based on angle to target and turning speeed
 	float angularThrustEfficiency = 1;
 
 
@@ -116,12 +148,14 @@ public class Fleets : NetworkBehaviour {
 			return position;
 		}
 		set {
+			//this shouldnt be needed, but just in case something goes wrong with our z axis
 			value.z = 0;
 			position = value;
-			updateMovement (); //whenever fleet psition is changed this function will be called
+			updateMovement (); //whenever fleet position is changed this function will be called
 		}
 	}
 
+	//Where we want to go
 	Vector3 targetPosition;
 
 	public Vector3 TargetPosition {
@@ -131,7 +165,7 @@ public class Fleets : NetworkBehaviour {
 		set {
 			targetPosition = value;
 			if (targetPosition != null) {
-				
+				//Point at the target location to maximize angular thrust
 				LookTowards ();
 			}
 
@@ -149,11 +183,12 @@ public class Fleets : NetworkBehaviour {
 	}
 
 	void updateMovement(){
+		//Make sure each ships position matches the overall fleet position in case one gets seperated later
 		foreach (Ships ship in FleetShips) {
-			if (ship.movementSpeed >= movementSpeed) { //check that the ship is actually capable of the movement
-				ship.Position = position; //update its position
+			if (ship.movementSpeed >= movementSpeed) { 
+				ship.Position = position;
 			} else if(removeSlowShips){
-				removeFromFleet (ship); //this should never happen
+				removeFromFleet (ship); //Remove ships that cant keep up if neccessary
 			}
 			fleetGo.transform.position = position;
 		}
@@ -188,24 +223,22 @@ public class Fleets : NetworkBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		setupGo ();
+		SetupGo ();
 		SetupFleets ();
-		FleetShips = new List<Ships> ();
-		FleetsList = GameObject.FindGameObjectWithTag ("Lists").GetComponent<Lists>().FleetsList;
+		SetupCollider ();
+		SetupSprite ();
 		AddList ();
-
-
 		Debug.Log ("Fleet created: " + fleetName);
 
 	}
 
-	void setupGo(){
+	//Setup_________________________________________________________________________________________________
+	void SetupGo(){
 		fleetGo = this.gameObject;
 		if (fleetGo == null) {
 			Debug.Log ("Fatal GameObject load error");
 		}
-		position = new Vector3(fleetGo.transform.position.x, fleetGo.transform.position.y,0);
-		targetPosition = position;
+
 		SpritesGo = GameObject.FindGameObjectWithTag ("GameController");
 		sprites = SpritesGo.GetComponent<Sprites>();
 		fleetSprite = sprites.FleetSprite;
@@ -214,10 +247,31 @@ public class Fleets : NetworkBehaviour {
 		}
 
 		fleetGo.transform.position.Set(position.x, position.y, position.z);
-	//	fleetGo.AddComponent<SpriteRenderer>();
-		//fleetGo.GetComponent<SpriteRenderer> ().sprite = fleetSprite;
-		//fleetGo.transform.position = new Vector3 (position.x, position.y, 0);
+		fleetGo.AddComponent<SpriteRenderer>();
 
+		selectionEffect = fleetGo.GetComponentInChildren<ParticleSystem> ();
+		SetGlow = false;
+	}
+
+	public void SetupFleets(){
+		position = new Vector3(fleetGo.transform.position.x, fleetGo.transform.position.y,0);
+		targetPosition = position;
+		FleetShips = new List<Ships> ();
+		FleetsList = GameObject.FindGameObjectWithTag ("Lists").GetComponent<Lists>().FleetsList;
+		fleetName = "debugFleet";
+	}
+
+	void SetupCollider(){
+		coll = fleetGo.GetComponent<BoxCollider> ();
+		collVecOrig = coll.size;
+	}
+
+	void SetupSprite(){
+		sr = fleetGo.GetComponent<SpriteRenderer> ();
+		sr.sprite = fleetSprite;
+		sr.enabled = true;
+		//We need to adjust the z, otherwise it wont detect clicks since sprites have no thickness
+		collVecSprite = new Vector3(sr.sprite.bounds.size.x,sr.sprite.bounds.size.y, 10);
 	}
 
 	void AddList(){
@@ -226,6 +280,7 @@ public class Fleets : NetworkBehaviour {
 		Debug.Log (FleetsList.Count);
 	}
 
+	//__________________________________________________________________________________________________
 
 	// Update is called once per frame
 	void Update() {
@@ -237,35 +292,15 @@ public class Fleets : NetworkBehaviour {
 		setMovementSpeed ();
 	
 
-		//Cancer math sorry__________________
-		
-
-		fleetGo.transform.rotation = Quaternion.Slerp (fleetGo.transform.rotation, targetRot, .5f*Time.deltaTime);
+		//rotates over time towards target
+		fleetGo.transform.rotation = Quaternion.Slerp (fleetGo.transform.rotation, targetRot, rotationSpeed*Time.deltaTime);
 		angularThrustEfficiency = 1f - (Quaternion.Angle (targetRot, fleetGo.transform.rotation)) / 180f;
 
-		/*
-		if (angularThrustEfficiency < .5f)
-		{		angularThrustEfficiency = 0f;
-	}
-		if (angularThrustEfficiency < .75f)
-		{		angularThrustEfficiency /= 4f;
-		}
-		if (angularThrustEfficiency < .90f)
-		{		angularThrustEfficiency /= 3f;
-		}
-		if (angularThrustEfficiency < .96f)
-		{		angularThrustEfficiency /= 2f;
-		}
-
-*/
-		//Debug.Log (angularThrustEfficiency); //this will spam the shit out of the log
-		//___________________________________
 
 		processMovement ();
 		fleetGo.transform.position = position;
-		//fleetGo.transform.Rotate(new Vector3(-90,fleetGo.transform.rotation.eulerAngles.y,fleetGo.transform.rotation.eulerAngles.z));
 
-
+		//Draw a waypoint line to current target location
 		if (position != targetPosition) {
 			DrawPath (position, targetPosition, Color.green, Time.deltaTime);
 		}

@@ -18,7 +18,8 @@ public class Ships : MonoBehaviour {
 
 	public Fleets assignedFleet = null;
 
-	public float movementSpeed = 2;
+	//Conventional engines should = a speed of 2 at game start
+	public float movementSpeed = 20;
 
 	GameObject shipGo;
 	SpriteRenderer shipSr;
